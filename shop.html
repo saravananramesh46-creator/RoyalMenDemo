@@ -1,0 +1,140 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ramesh Store | Premium Shopping</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<header class="header">
+    <a href="#" class="logo">RAMESH<span>STORE.</span></a>
+
+    <nav>
+        <a href="#home">Home</a>
+        <a href="#products">Products</a>
+        <a href="#about">About</a>
+        <a href="#contact">Contact</a>
+    </nav>
+
+    <button class="cart-btn" onclick="toggleCart()">
+        🛒 Cart <span id="cart-count">0</span>
+    </button>
+</header>
+
+<section class="hero" id="home">
+    <div class="hero-content">
+        <p class="tag">WELCOME TO RAMESH STORE</p>
+        <h1>Discover Your<br><span>Perfect Style.</span></h1>
+        <p>Explore premium products at amazing prices.</p>
+        <a href="#products" class="shop-btn">Explore Products →</a>
+    </div>
+    <div class="hero-image">
+        <img src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=1000" alt="Shopping store">
+    </div>
+</section>
+
+<section class="features">
+    <div>🚚 <h3>Free Delivery</h3><p>On selected orders</p></div>
+    <div>🔒 <h3>Secure Shopping</h3><p>Safe checkout experience</p></div>
+    <div>⭐ <h3>Premium Quality</h3><p>Quality products</p></div>
+    <div>💬 <h3>Customer Support</h3><p>We're here to help</p></div>
+</section>
+
+<section class="products-section" id="products">
+    <div class="section-heading">
+        <p class="tag">OUR COLLECTION</p>
+        <h2>Explore Our Products</h2>
+        <p>Find something you love.</p>
+    </div>
+
+    <div class="tools">
+        <input type="text" id="search" placeholder="🔍 Search products...">
+
+        <select id="category">
+            <option value="all">All Categories</option>
+            <option value="Fashion">Fashion</option>
+            <option value="Electronics">Electronics</option>
+            <option value="Accessories">Accessories</option>
+            <option value="Shoes">Shoes</option>
+        </select>
+
+        <select id="sort">
+            <option value="default">Sort By</option>
+            <option value="low">Price: Low to High</option>
+            <option value="high">Price: High to Low</option>
+            <option value="name">Name: A to Z</option>
+        </select>
+    </div>
+
+    <div class="product-grid" id="product-grid"></div>
+</section>
+
+<section class="about" id="about">
+    <div>
+        <p class="tag">ABOUT US</p>
+        <h2>Shopping Made Simple.</h2>
+        <p>Ramesh Store brings together style, quality and convenience. Discover products you love with a smooth shopping experience.</p>
+    </div>
+    <div class="about-icon">🛍️</div>
+</section>
+
+<section class="contact" id="contact">
+    <h2>Stay Connected</h2>
+    <p>Have a question? Contact our store.</p>
+    <a href="mailto:hello@example.com">Send Us An Email</a>
+</section>
+
+<footer>
+    <h2>RAMESH<span>STORE.</span></h2>
+    <p>© 2026 Ramesh Store. All Rights Reserved.</p>
+</footer>
+
+<!-- CART PANEL -->
+<div class="overlay" id="overlay" onclick="toggleCart()"></div>
+
+<aside class="cart-panel" id="cart-panel">
+    <div class="cart-heading">
+        <h2>🛒 Your Cart</h2>
+        <button onclick="toggleCart()">✕</button>
+    </div>
+
+    <div id="cart-items"></div>
+
+    <div class="bill">
+        <p>Subtotal <span id="subtotal">₹0</span></p>
+        <p>Delivery <span id="delivery">₹0</span></p>
+        <h3>Total <span id="total">₹0</span></h3>
+        <button class="checkout-btn" onclick="checkout()">Proceed to Checkout →</button>
+    </div>
+</aside>
+
+<!-- CHECKOUT POPUP -->
+<div class="modal" id="checkout-modal">
+    <div class="modal-content">
+        <button class="close-modal" onclick="closeCheckout()">✕</button>
+        <h2>Complete Your Order</h2>
+        <form id="checkout-form">
+            <input id="customer-name" placeholder="Your Name" required>
+            <input id="customer-phone" type="tel" placeholder="Phone Number" pattern="[0-9]{10}" required>
+            <textarea id="customer-address" placeholder="Delivery Address" required></textarea>
+            <select id="payment-method" required>
+                <option value="">Select Payment Method</option>
+                <option value="Cash on Delivery">Cash on Delivery</option>
+                <option value="UPI">UPI (Demo)</option>
+            </select>
+            <button type="submit" class="checkout-btn">Place Order</button>
+        </form>
+        <p class="demo-note">Demo checkout only. No real payment is processed.</p>
+    </div>
+</div>
+
+<div id="toast" class="toast"></div>
+
+<script src="script.js"></script>
+</body>
+</html>

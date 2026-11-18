@@ -1,0 +1,427 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ROYAL MEN - Premium Store</title>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+ font-family:Arial,sans-serif;background:#eef1f8;color:#182039;
+ overflow-x:hidden;
+}
+header{
+ position:sticky;top:0;z-index:100;
+ background:linear-gradient(100deg,#11172f,#263c9b,#7029a8);
+ color:white;padding:17px 5%;
+ display:flex;justify-content:space-between;align-items:center;gap:15px;
+ box-shadow:0 5px 25px #2227;
+}
+.logo{font-size:27px;font-weight:900;letter-spacing:2px}
+.logo span{color:#ffe500}
+.search{display:flex;flex:1;max-width:500px}
+.search input{width:100%;padding:13px;border:0;outline:none;border-radius:8px 0 0 8px}
+.search button{padding:12px 18px;border:0;background:#ffe500;cursor:pointer}
+.cartbtn{padding:12px 17px;border:0;border-radius:8px;background:#ffe500;font-weight:bold;cursor:pointer}
+
+.hero{
+ margin:18px;border-radius:22px;min-height:370px;
+ padding:65px 7%;display:flex;align-items:center;
+ color:white;position:relative;overflow:hidden;
+ background:linear-gradient(120deg,#10172f,#193da4,#a52bd4,#ff398c);
+ background-size:300% 300%;animation:bgmove 8s infinite;
+}
+.hero h1{font-size:clamp(35px,6vw,65px);line-height:1.1}
+.hero h1 span{color:#ffe500}
+.hero p{font-size:18px;margin:18px 0 25px}
+.hero button{
+ background:#ffe500;border:0;border-radius:30px;
+ padding:15px 30px;font-weight:bold;cursor:pointer;
+ box-shadow:0 0 25px #ffe50088;transition:.4s;
+}
+.hero button:hover{transform:scale(1.15) rotate(-3deg)}
+.orb{
+ position:absolute;width:230px;height:230px;border-radius:50%;
+ right:13%;top:55px;
+ background:linear-gradient(135deg,#ffffff55,#ffffff05);
+ border:1px solid #ffffff66;
+ box-shadow:0 0 70px #fff5;
+ animation:orb 5s infinite ease-in-out;
+}
+.orb:after{
+ content:"RM";position:absolute;inset:0;
+ display:grid;place-items:center;font-size:75px;
+ font-weight:900;color:#ffffffbb;
+}
+.categories{
+ display:flex;gap:12px;justify-content:center;flex-wrap:wrap;
+ background:white;padding:20px;margin:18px;border-radius:15px;
+}
+.categories button{
+ border:1px solid #3159bd;color:#3159bd;background:white;
+ padding:11px 20px;border-radius:30px;cursor:pointer;transition:.3s;
+}
+.categories button:hover,.categories button.active{
+ background:linear-gradient(90deg,#3159bd,#a32ad0);
+ color:white;transform:translateY(-5px);
+ box-shadow:0 8px 20px #3159bd55;
+}
+.section{text-align:center;padding:25px}
+.section h2{font-size:32px}
+.section p{color:#777;margin-top:8px}
+.products{
+ display:grid;grid-template-columns:repeat(4,minmax(0,1fr));
+ gap:22px;padding:20px;
+}
+.card{
+ background:white;border-radius:17px;overflow:hidden;
+ box-shadow:0 5px 20px #172b4d12;
+ position:relative;transition:.4s;
+ transform-style:preserve-3d;
+ animation:enter .65s both;
+}
+.card:hover{
+ box-shadow:0 20px 40px #6232b955;
+}
+.card .image{
+ height:255px;overflow:hidden;position:relative;
+ background:#eee;
+}
+.card img{
+ width:100%;height:100%;object-fit:cover;
+ transition:transform .7s,filter .5s;
+}
+.card:hover img{
+ transform:scale(1.15) rotate(2deg);
+ filter:saturate(1.3) contrast(1.05);
+}
+.offer{
+ position:absolute;top:12px;left:12px;
+ background:linear-gradient(90deg,#ff357d,#ff9c24);
+ color:white;padding:8px 12px;border-radius:30px;
+ font-size:11px;font-weight:bold;
+}
+.heart{
+ position:absolute;right:12px;top:12px;
+ background:white;border:0;width:36px;height:36px;
+ border-radius:50%;cursor:pointer;font-size:18px;
+ transition:.3s;
+}
+.heart:hover{transform:scale(1.3)}
+.info{padding:15px}
+.info h3{font-size:17px;margin-bottom:8px}
+.rating{color:#ed9b00;margin:9px 0}
+.price{color:#119447;font-weight:bold;font-size:21px}
+.old{font-size:13px;color:#999;text-decoration:line-through;margin-left:7px}
+.info button{
+ width:100%;padding:12px;border:0;border-radius:8px;
+ margin-top:9px;cursor:pointer;font-weight:bold;transition:.3s;
+}
+.add{background:linear-gradient(90deg,#ffe500,#ffb600)}
+.buy{background:linear-gradient(90deg,#ff773b,#f22d83);color:white}
+.info button:hover{
+ transform:scale(1.06);box-shadow:0 6px 20px #0003;
+ animation:shake .35s;
+}
+.badge{display:inline-block;color:#269b50;font-size:12px;margin-top:7px}
+footer{
+ margin-top:40px;padding:45px 15px;text-align:center;
+ color:white;background:linear-gradient(110deg,#10172f,#263c9b,#7029a8);
+}
+footer h2{color:#ffe500;margin-bottom:15px}
+.overlay{display:none;position:fixed;inset:0;background:#0009;z-index:200}
+.overlay.show{display:block}
+.cart{
+ position:fixed;right:-440px;top:0;width:400px;max-width:95%;
+ height:100%;overflow:auto;background:white;padding:22px;
+ z-index:201;transition:.4s;
+}
+.cart.show{right:0}
+.carthead{display:flex;justify-content:space-between;margin-bottom:20px}
+.close{border:0;padding:10px;cursor:pointer}
+.cartitem{display:flex;gap:12px;padding:12px 0;border-bottom:1px solid #ddd}
+.cartitem img{width:75px;height:85px;object-fit:cover}
+.cartitem div{flex:1}
+.cartitem button{cursor:pointer;margin:5px}
+.total{font-size:22px;font-weight:bold;margin:22px 0}
+.checkout{width:100%;padding:15px;background:#ff6431;color:white;border:0;border-radius:7px;cursor:pointer}
+.modal{
+ display:none;position:fixed;inset:0;z-index:300;background:#0009;
+ align-items:center;justify-content:center;padding:15px;
+}
+.modal.show{display:flex}
+.modalbox{
+ background:white;width:440px;max-width:100%;padding:25px;
+ border-radius:15px;max-height:90vh;overflow:auto;
+ animation:enter .4s;
+}
+.modalbox input,.modalbox textarea,.modalbox select{
+ width:100%;padding:12px;margin:9px 0 15px;
+ border:1px solid #ccc;border-radius:6px;
+}
+.modalbox button{width:100%;padding:13px;background:#2874f0;color:white;border:0;cursor:pointer}
+@keyframes bgmove{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
+@keyframes orb{0%,100%{transform:translateY(0) rotate(0)}50%{transform:translateY(-30px) rotate(12deg)}}
+@keyframes enter{from{opacity:0;transform:translateY(35px) scale(.96)}to{opacity:1;transform:translateY(0) scale(1)}}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-4px)}75%{transform:translateX(4px)}}
+@media(max-width:900px){.products{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:600px){
+ header{flex-wrap:wrap;justify-content:center}
+ .search{order:3;flex-basis:100%}
+ .products{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;padding:10px}
+ .card .image{height:170px}
+ .info{padding:10px}
+ .info h3{font-size:14px}
+ .orb{right:-90px;width:190px;height:190px}
+ .hero{padding:45px 7%;min-height:320px}
+}
+</style>
+</head>
+
+<body>
+
+<header>
+ <div class="logo">ROYAL <span>MEN</span></div>
+ <div class="search">
+  <input id="search" placeholder="Search products..." oninput="render()">
+  <button onclick="render()">🔍</button>
+ </div>
+ <button class="cartbtn" onclick="openCart()">🛒 Cart <span id="count">0</span></button>
+</header>
+
+<section class="hero">
+ <div>
+  <h1>LOOK <span>ROYAL.</span><br>LIVE ROYAL.</h1>
+  <p>Discover the latest men's fashion collection.</p>
+  <button onclick="document.getElementById('shop').scrollIntoView({behavior:'smooth'})">EXPLORE NOW →</button>
+ </div>
+ <div class="orb"></div>
+</section>
+
+<div class="categories">
+ <button class="active" onclick="category('All',this)">All</button>
+ <button onclick="category('Shirts',this)">Shirts</button>
+ <button onclick="category('T-Shirts',this)">T-Shirts</button>
+ <button onclick="category('Jeans',this)">Jeans</button>
+ <button onclick="category('Shoes',this)">Shoes</button>
+ <button onclick="category('Watches',this)">Watches</button>
+</div>
+
+<div class="section" id="shop">
+ <h2>🔥 PREMIUM COLLECTION</h2>
+ <p>Find your favourite fashion here</p>
+</div>
+
+<div class="products" id="products"></div>
+
+<footer>
+ <h2>ROYAL MEN</h2>
+ <p>Premium Men's Fashion Store</p>
+ <p>Style | Comfort | Quality</p>
+ <p>© 2026 ROYAL MEN</p>
+</footer>
+
+<div class="overlay" id="overlay" onclick="closeCart()"></div>
+<div class="cart" id="cart">
+ <div class="carthead"><h2>🛒 My Cart</h2><button class="close" onclick="closeCart()">✕</button></div>
+ <div id="items"></div>
+ <div class="total">Total: ₹<span id="total">0</span></div>
+ <button class="checkout" onclick="buy()">PROCEED TO BUY</button>
+</div>
+
+<div class="modal" id="modal">
+ <div class="modalbox" id="modalbox">
+  <h2>📦 Delivery Details</h2>
+  <form id="orderForm">
+   <input id="name" placeholder="Full Name" required>
+   <input id="phone" placeholder="Mobile Number" pattern="[0-9]{10}" required>
+   <input id="email" type="email" placeholder="Email" required>
+   <textarea id="address" placeholder="Delivery Address" required></textarea>
+   <select id="payment"><option>Cash on Delivery</option><option>UPI Demo Only</option></select>
+   <button type="submit">CONFIRM ORDER</button>
+  </form>
+ </div>
+</div>
+
+<script>
+const names=[
+["Premium Black Shirt","Shirts",799],
+["White Casual Shirt","Shirts",699],
+["Blue Formal Shirt","Shirts",899],
+["Luxury Cotton Shirt","Shirts",999],
+["Classic Black T-Shirt","T-Shirts",499],
+["Printed T-Shirt","T-Shirts",599],
+["Oversized T-Shirt","T-Shirts",649],
+["Premium White T-Shirt","T-Shirts",549],
+["Blue Slim Jeans","Jeans",1199],
+["Black Denim Jeans","Jeans",1099],
+["Classic Denim Jeans","Jeans",1299],
+["Street Style Jeans","Jeans",1399],
+["Sport Running Shoes","Shoes",1499],
+["White Casual Shoes","Shoes",1299],
+["Black Sneakers","Shoes",1699],
+["Premium Sports Shoes","Shoes",1899],
+["Luxury Men's Watch","Watches",1999],
+["Black Classic Watch","Watches",1599],
+["Silver Men's Watch","Watches",2299],
+["Gold Style Watch","Watches",2499],
+["Casual Shirt","Shirts",749],
+["Party Wear Shirt","Shirts",1199],
+["Graphic T-Shirt","T-Shirts",599],
+["Sport T-Shirt","T-Shirts",699],
+["Ripped Jeans","Jeans",1499],
+["Stretch Jeans","Jeans",1399],
+["Running Sneakers","Shoes",1799],
+["Classic Leather Shoes","Shoes",2199],
+["Digital Watch","Watches",1299],
+["Premium Analog Watch","Watches",2799]
+];
+
+const images=[
+"photo-1596755094514-f87e34085b2c",
+"photo-1603252109303-2751441dd157",
+"photo-1598033129183-c4f50c736f10",
+"photo-1603252110481-7ba873bf42ab",
+"photo-1521572163474-6864f9cf17ab",
+"photo-1503342217505-b0a15ec3261c",
+"photo-1576566588028-4147f3842f27",
+"photo-1583743814966-8936f37f4678",
+"photo-1542272604-787c3835535d",
+"photo-1541099649105-f69ad21f3246",
+"photo-1511196044526-5cb3bcb7071b",
+"photo-1475178626620-a4d074967452",
+"photo-1542291026-7eec264c27ff",
+"photo-1549298916-b41d501d3772",
+"photo-1552346154-21d32810aba3",
+"photo-1460353581641-37baddab0fa2",
+"photo-1524592094714-0f0654e20314",
+"photo-1524805444758-089113d48a6d",
+"photo-1523275335684-37898b6baf30",
+"photo-1508685096489-7aacd43bd3b1"
+];
+
+const products=names.map((x,i)=>({
+ id:i+1,name:x[0],category:x[1],price:x[2],
+ old:Math.round(x[2]*1.5),rating:(4.1+(i%9)/10).toFixed(1),
+ img:"https://images.unsplash.com/"+images[i%images.length]+"?auto=format&fit=crop&w=600&q=85"
+}));
+
+let cart=[],selected="All",liked=[];
+
+function render(){
+ const q=document.getElementById("search").value.toLowerCase();
+ const list=products.filter(p=>
+ (selected==="All"||p.category===selected)&&
+ p.name.toLowerCase().includes(q)
+ );
+ document.getElementById("products").innerHTML=list.map((p,i)=>`
+ <div class="card" style="animation-delay:${(i%8)*.06}s">
+  <div class="image">
+   <span class="offer">SPECIAL OFFER</span>
+   <button class="heart" onclick="like(${p.id},this)">${liked.includes(p.id)?"❤️":"♡"}</button>
+   <img src="${p.img}" alt="${p.name}" onerror="this.src='https://placehold.co/500x500?text=ROYAL+MEN'">
+  </div>
+  <div class="info">
+   <h3>${p.name}</h3>
+   <div class="rating">⭐ ${p.rating}/5</div>
+   <div class="price">₹${p.price}<span class="old">₹${p.old}</span></div>
+   <span class="badge">✔ Special Price</span>
+   <button class="add" onclick="add(${p.id})">🛒 ADD TO CART</button>
+   <button class="buy" onclick="buyNow(${p.id})">⚡ BUY NOW</button>
+  </div>
+ </div>`).join("")||"<h3>No products found</h3>";
+
+ // 3D tilt on desktop
+ document.querySelectorAll(".card").forEach(card=>{
+  card.addEventListener("mousemove",e=>{
+   const r=card.getBoundingClientRect();
+   const x=(e.clientX-r.left)/r.width-.5;
+   const y=(e.clientY-r.top)/r.height-.5;
+   card.style.transform=`perspective(900px) rotateY(${x*9}deg) rotateX(${-y*9}deg) translateY(-5px)`;
+  });
+  card.addEventListener("mouseleave",()=>card.style.transform="");
+ });
+}
+
+function like(id,btn){
+ if(liked.includes(id))liked=liked.filter(x=>x!==id);
+ else liked.push(id);
+ btn.innerText=liked.includes(id)?"❤️":"♡";
+}
+function category(c,b){
+ selected=c;
+ document.querySelectorAll(".categories button").forEach(x=>x.classList.remove("active"));
+ b.classList.add("active");
+ render();
+}
+function add(id){
+ const p=products.find(x=>x.id===id);
+ const x=cart.find(x=>x.id===id);
+ if(x)x.qty++;else cart.push({...p,qty:1});
+ update();
+}
+function buyNow(id){
+ cart=[{...products.find(x=>x.id===id),qty:1}];
+ update();openCart();
+}
+function update(){
+ let count=0,total=0;
+ cart.forEach(x=>{count+=x.qty;total+=x.price*x.qty});
+ document.getElementById("count").innerText=count;
+ document.getElementById("total").innerText=total;
+ document.getElementById("items").innerHTML=cart.length?cart.map(x=>`
+ <div class="cartitem">
+ <img src="${x.img}" alt="${x.name}">
+ <div><b>${x.name}</b><p>₹${x.price}</p>
+ <button onclick="qty(${x.id},-1)">−</button>${x.qty}
+ <button onclick="qty(${x.id},1)">+</button>
+ <button onclick="removeItem(${x.id})">Remove</button>
+ </div></div>`).join(""):"Your cart is empty!";
+}
+function qty(id,n){
+ let x=cart.find(x=>x.id===id);
+ if(!x)return;
+ x.qty+=n;
+ if(x.qty<=0)removeItem(id);else update();
+}
+function removeItem(id){cart=cart.filter(x=>x.id!==id);update()}
+function openCart(){
+ document.getElementById("cart").classList.add("show");
+ document.getElementById("overlay").classList.add("show");
+}
+function closeCart(){
+ document.getElementById("cart").classList.remove("show");
+ document.getElementById("overlay").classList.remove("show");
+}
+function buy(){
+ if(!cart.length){alert("Your cart is empty");return}
+ closeCart();document.getElementById("modal").classList.add("show");
+}
+function closeModal(){document.getElementById("modal").classList.remove("show")}
+
+document.getElementById("orderForm").addEventListener("submit",e=>{
+ e.preventDefault();
+ if(!cart.length)return;
+ const total=cart.reduce((s,x)=>s+x.price*x.qty,0);
+ const order="RM"+Date.now().toString().slice(-8);
+ const name=document.getElementById("name").value;
+ document.getElementById("modalbox").innerHTML=`
+ <div style="text-align:center;padding:20px">
+ <h1 style="color:green">✅ SUCCESS!</h1>
+ <h2>Thank You, ${safe(name)}!</h2>
+ <p>Your demo order has been created.</p><br>
+ <h3>Order ID: ${order}</h3><br>
+ <h2>Total: ₹${total}</h2><br>
+ <button onclick="location.reload()">CONTINUE SHOPPING</button>
+ </div>`;
+ cart=[];update();
+});
+function safe(v){
+ return String(v).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+}
+render();update();
+</script>
+</body>
+</html>
